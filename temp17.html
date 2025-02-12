@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="txt">hello</h1>
+    <input type="text" id="col" placeholder="Type col">
+    <select id="bg">
+        <option value="">Select bg</option>
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+    </select>
+    <button onclick="change()">Submit</button>
+    <script>
+        function change() 
+        {
+            let color = document.getElementById("col").value;
+            let bgc = document.getElementById("bg").value;
+            let text = document.getElementById("txt");
+            text.style.color = color;
+            text.style.backgroundColor=bgc;
+        }
+    </script>
+</body>
+</html>
