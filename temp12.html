@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container
+        {
+            display:flex;
+            justify-content:center;
+        }
+        .box
+        {
+            margin:20px;
+        }
+        img
+        {
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <div id="data"></div>
+    <script>
+        // prd is arr name it has 1 element i.e object and object has 5 keys
+        let prd=[
+            {
+                id:1,name:"product :P1",price:"price:100",desc:"this is p1",url:"https://picsum.photos/id/237/200/300"
+
+            },
+            {
+                id:2,name:"product :P2",price:"price:300",desc:"this is p2",url:"https://picsum.photos/seed/picsum/200/300"
+            },
+            {
+                id:3,name:"product :P3",price:"price:500",desc:"this is p3",url:"https://picsum.photos/200/300?grayscale"
+            }  
+        ];
+        let len=prd.length
+        let str="<div class='container'>"
+        for(let i=0;i<len;i++)
+        {
+ str=str+`<div class='box'><h3> ${prd[i].name}-${prd[i].price}-${prd[i].desc}</h3><img src="${prd[i].url}"><button>Add</button></div>`
+        }
+        str=str+"</div">
+            //data.innerHTML=str
+            document.write(str)
+    </script>
+</body>
+</html>

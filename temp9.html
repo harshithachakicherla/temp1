@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function show()
+        {
+           let mail=document.getElementById("email").value
+           let psw=document.getElementById("pw").value
+           data.innerHTML=`${mail}<br>${psw}`
+        }
+    </script>
+</head>
+<body>
+    <h1>Log In Form</h1>
+    <p><input type="email" id="email" placeholder="enter email"></p>
+    <p><input type="password" id="pw" placeholder="enter pw"></p>
+    <button onclick="show()">Login</button>
+    <div id="data"></div>
+</body>
+</html>

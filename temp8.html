@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let users=[]
+        function show()
+        {
+            //alert("hello")
+            let name=document.getElementById("name").value
+            let mail=document.getElementById("email").value
+            let pw=document.getElementById("password").value
+            let db=document.getElementById("dob").value
+            let user={
+                name:name,
+                email:mail,
+                password:pw,
+                dob:db
+            }
+            users.push(user)
+            console.log(users)
+            let len=users.length
+            let str=""
+            for(let i=0;i<len;i++)
+            {
+                str=str+`<li>${users[i].name}-${users[i].email}-${users[i].password}-${users[i].dob}</li>`
+            }
+            data.innerHTML=str
+            }
+    </script>
+</head>
+<body>
+    <h1>Reg Form</h1>
+    <p><input type="text" id="name" placeholder="Enter name"></p>
+    <p><input type="email" id="email" placeholder="Enter email"></p>
+    <p><input type="password" id="password" placeholder="Enter pw"></p>
+    <p><input type="date" id="dob" placeholder="Enter dob"></p>
+    <button onclick="show()">Register </button>
+    <hr>
+    <div id="data"></div>
+    
+</body>
+</html>
