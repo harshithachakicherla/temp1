@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    h1 {
+    color: blue;
+}
+    .logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: auto;
+}
+.name-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name-container input {
+    width: 60%;
+}
+
+    body {
+        background-color:silver;
+        font-size: large;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .gender-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+.gender-container input {
+    margin: 0 5px;
+}
+
+        .container {
+            padding:50px;
+            border: 1px solid #ccc;
+            border-radius:10px;
+            border-color: black;
+            text-align: center;
+            width:400px;
+            background-color: white
+        }
+        input, select, button {
+            margin-bottom: 5px;
+            padding: 15px;
+            width: 80%;
+        }
+        button {
+            cursor: pointer;
+            background-color: green;
+        }
+        .alert {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .dobcont{
+            display: flex;
+            justify-content: space-between;
+        }
+        .dob-container select {
+            width: 32%;
+        }
+</style>
+<script>
+    let users=[];
+    function reg()
+        {
+            let str = `
+            <div class="container">
+                <h2>Create Account</h2>
+                <hr>
+                <p class="alert" id="alertMsg">"All fiels shld be filled"</p>
+                 <div class="name-container">
+            <p><input type="text" id="firstName" placeholder="First Name"></p>
+            <p><input type="text" id="lastName" placeholder="Last Name"></p>
+            </div>
+                <p><input type="email" id="email" placeholder="Enter email"></p>
+                <p><input type="password" id="password" placeholder="Enter password"></p>
+                <p>Date of Birth:</p>
+                <p class="dobcont">
+                    <select id="day"></select>
+                    <select id="month"></select>
+                    <select id="year"></select>
+                </p>
+                 <p>Gender:</p>
+        <div class="gender-container">
+            <input type="radio" name="gender" value="Male" id="male">
+            <label for="male">Male</label>
+            
+            <input type="radio" name="gender" value="Female" id="female">
+            <label for="female">Female</label>
+            
+            <input type="radio" name="gender" value="Custom" id="other">
+            <label for="other">Other</label>
+        </div>
+                <button onclick="adduser()">Submit</button>
+                <button onclick="sh()">Already have an account then log in</button>
+            </div>`;
+            root.innerHTML = str;
+            db();
+        }
+        function success() 
+        {
+    root.innerHTML = `<div style="text-align:center; margin-top:50px;">
+            <h2 style="color: green;">Successful in Creating Account !!</h2>
+            <button onclick="sh()">Back to Login</button>
+        </div>`;
+        }
+        function sh()
+        {
+            let str = `
+            <div class="container">
+                <h2>Login</h2>
+                <div class="alert" id="msg"></div>
+                <p><input type="email" id="email" placeholder="Enter email"></p>
+                <p><input type="password" id="password" placeholder="Enter password"></p>
+                <button onclick="wel()">Log in</button>
+                <button onclick="reg()">Sign Up</button>
+            </div>`;
+            root.innerHTML = str;
+        }
+        function wel()
+        {
+let email=document.getElementById("email").value;
+let password=document.getElementById("password").value;
+let msg = document.getElementById("msg");
+let us=users.find(u=>u.email==email && u.password==password)
+if(us)
+{
+    welc(us.firstName);
+}
+else 
+{
+    msg.innerHTML="Access denied invalid credentials";
+   msg.style.display="block";
+}
+        }
+        function adduser()
+        {
+            let firstName = document.getElementById("firstName").value;
+            let lastName = document.getElementById("lastName").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let day = document.getElementById("day").value;
+            let month = document.getElementById("month").value;
+            let year = document.getElementById("year").value;
+            let gender = document.querySelector('input[name="gender"]:checked');
+            let alertMsg = document.getElementById("alertMsg");
+
+            if (!firstName || !lastName || !email || !password || !day || !month || !year) {
+                alertMsg.style.display = "block";
+                return;
+            }
+            alertMsg.style.display = "none";
+            //user obj crtion
+            let dob = `${day}/${month}/${year}`;
+            let user = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+                dob: dob,
+                gender: gender.value
+            };
+            users.push(user);
+            success();
+        }
+        function welc(firstName) 
+        {
+        root.innerHTML = `<div style="text-align:center; margin-top:50px;">
+            <h1> Hi Welcome ${firstName}!</h1>
+            <button onclick="sh()">Log Out</button>
+        </div>`;
+}
+
+        function db()
+        {
+            let daySelect = document.getElementById('day');
+            let monthSelect = document.getElementById('month');
+            let yearSelect = document.getElementById('year');
+
+            for (let i = 1; i <= 31; i++) {
+                daySelect.innerHTML += `<option value="${i}">${i}</option>`;
+            }
+
+            let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            months.forEach((month,val) => {
+                monthSelect.innerHTML += `<option value="${val+ 1}">${month}</option>`;
+            });
+
+            let c= new Date().getFullYear();
+            for (let i = c; i >= 1995; i--) {
+                yearSelect.innerHTML += `<option value="${i}">${i}</option>`;
+            }
+        }
+</script>
+<body onload="sh()">
+    <img src="images/5D8s-GsHJlJ.png" class="logo">
+</body>
+    <h1>FaceBook</h1>
+    <div id="root"></div>
+</body>
+</html>
