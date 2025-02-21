@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #eeeeee;
+      }
+      .container {
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px;
+        width: 400px;
+        margin: auto;
+      }
+      .row {
+        display: flex;
+        justify-content: center;
+      }
+      .title {
+        font-size: 30px;
+        margin-top: 30px;
+      }
+      .header {
+        font-size: 50px;
+        color: blue;
+        font-weight: bold;
+        font-family: verdana;
+      }
+      .caption {
+        font-size: 20px;
+        color: gray;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+      input,
+      select {
+        width: 100%;
+        margin: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        border: 1px solid gray;
+      }
+      button {
+        color: white;
+        background-color: green;
+        font-size: 20px;
+        padding: 5px;
+        border-radius: 2px;
+        width: 150px;
+        border: none;
+        margin: 5px;
+      }
+      .leftCaption {
+        color: gray;
+        margin-left: 5px;
+        font-size: 10px;
+      }
+      .qMark {
+        background-color: green;
+        border-radius: 5px;
+        color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin: 2px;
+      }
+      .radioClass {
+        border: 1px solid gray;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin: 5px;
+        border-radius: 5px;
+        padding: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="header">facebook</div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="title">Create a new account</div>
+          <div class="caption">It's quick and easy.</div>
+        </div>
+      </div>
+      <hr />
+      <div id="root"></div>
+    </div>
+    <script>
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const showData = () => {
+    let firstname = document.getElementById("firstname").value;
+    let surname = document.getElementById("surname").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let gender = document.getElementsByName("gender");
+    let pronoun = document.getElementById("prSelect").value;
+    let day = document.getElementById("day").value;
+    let month = document.getElementById("month").value;
+    let year = document.getElementById("year").value;
+    let dob = `${day}-${month}-${year}`;
+
+    let g = "";
+    if (gender[0].checked) g = "Female";
+    if (gender[1].checked) g = "Male";
+    if (gender[2].checked) g = pronoun;
+    if (!firstname || !surname || !email || !password || !dob || g == "") {
+        alert("Please fill out all fields");
+        return;
+    }
+
+    let str = `
+        <h3>Verify your information</h3>
+        <p>Name: ${firstname} ${surname}</p>
+        <p>Email: ${email}</p>
+        <p>Password: ${password}</p>
+        <p>Gender: ${g}</p>
+        <p>Date of Birth: ${dob}</p>
+        <button onclick="showForm('${firstname}', '${surname}', '${email}', '${password}', '${day}', '${month}', '${year}', '${g}')">Edit</button>
+          <button onclick="confirmData()">Confirm</button>
+    `;
+    root.innerHTML = str;
+};
+const confirmData = () => {
+    let root = document.getElementById("root");
+    root.innerHTML = `
+        <h3>Thank You!</h3>
+        <p>Your details have been successfully submitted.</p>
+    `;
+};
+
+
+const showForm = (firstname = "", surname = "", email = "", password = "", day = "", month = "", year = "", gender = "") => {
+    let str = `
+        <div class="row">
+            <input type="text" id="firstname" placeholder="Firstname" value="${firstname}" />
+            <input type="text" id="surname" placeholder="Surname" value="${surname}" />
+        </div>
+        <div class="row" style="justify-content: start">
+            <div class="leftCaption">Date of Birth</div>
+        </div>
+        <div class="row">
+            <select id="day"></select>
+            <select id="month"></select>
+            <select id="year"></select>
+        </div>
+        <div class="row" style="justify-content: start">
+            <div class="leftCaption">Gender</div>
+        </div>
+        <div class="row">
+            <div class="radioClass">
+                <div><label> Female</label></div>
+                <div><input type="radio" name="gender" onclick="togglePronoun()" ${gender === "Female" ? "checked" : ""} /></div>
+            </div>
+            <div class="radioClass">
+                <div><label> Male</label></div>
+                <div><input type="radio" name="gender" onclick="togglePronoun()" ${gender === "Male" ? "checked" : ""} /></div>
+            </div>
+            <div class="radioClass">
+                <div><label> Custom</label></div>
+                <div><input type="radio" name="gender" onclick="togglePronoun()" ${gender !== "Male" && gender !== "Female" && gender !== "" ? "checked" : ""} /></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <select id="prSelect" style="${gender !== "Male" && gender !== "Female" && gender !== "" ? "display:block" : "display:none"}">
+                <option value="NA">Select your pronoun</option>
+                <option value="She" ${gender === "She" ? "selected" : ""}>She:"Wish her a happy birthday"</option>
+                <option value="He" ${gender === "He" ? "selected" : ""}>He:"Wish him a happy birthday"</option>
+                <option value="They" ${gender === "They" ? "selected" : ""}>They:"Wish them a happy birthday"</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <input type="text" id="email" placeholder="Mobile number or email address" value="${email}" />
+        </div>
+        <div class="row">
+            <input type="password" id="password" placeholder="New password" value="${password}" />
+        </div>
+        <div class="row">
+            <button onclick='showData()'>Sign Up</button>
+        </div>
+    `;
+    root.innerHTML = str;
+
+    // Populate date dropdowns
+    let dayStr = "", monthStr = "", yearStr = "";
+    for (let i = 1; i <= 31; i++) {
+        dayStr += `<option ${i == day ? "selected" : ""}>${i}</option>`;
+    }
+    document.getElementById("day").innerHTML = dayStr;
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    for (let i = 0; i < 12; i++) {
+        monthStr += `<option ${months[i] === month ? "selected" : ""}>${months[i]}</option>`;
+    }
+    document.getElementById("month").innerHTML = monthStr;
+
+    for (let i = 1905; i <= 2025; i++) {
+        yearStr += `<option ${i == year ? "selected" : ""}>${i}</option>`;
+    }
+    document.getElementById("year").innerHTML = yearStr;
+};
+
+
+      showForm();
+      let str = "";
+      let dt = new Date()
+      let d = dt.getDate()
+      let m = dt.getMonth()
+      let y = dt.getFullYear()
+      for (let i = 1; i <= 31; i++) {
+        str += `<option ${i === d && "selected"}>${i}</option>`;
+      }
+      day.innerHTML = str;
+      str = "";
+      for (let i = 0; i <= 11; i++) {
+        str += `<option ${i === m && "selected"}>${months[i]}</option>`;
+      }
+      month.innerHTML = str;
+      str = "";
+      for (let i = 1905; i <= 2025; i++) {
+        str += `<option ${i === y && "selected"}>${i}</option>`;
+      }
+      year.innerHTML = str;
+
+      const togglePronoun = () => {
+        let p = document.getElementsByName("gender");
+        if (p[2].checked) {
+          prSelect.style.display = "block";
+        } else {
+          prSelect.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
