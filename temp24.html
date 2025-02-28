@@ -116,8 +116,7 @@
       let yy;
       let pronoun;
       let g = "";
-      let interest=0;
-      let ir='';
+     
       const showData = () => {
         firstname = document.getElementById("firstname").value;
         surname = document.getElementById("surname").value;
@@ -136,17 +135,23 @@
         if (gender[0].checked) g = "Female";
         if (gender[1].checked) g = "Male";
         if (gender[2].checked) g = pronoun;
-        ir='';
-        if (interest[0].checked) ir = "Sports";
-        if (interest[1].checked) ir = "Movies";
-        if (interest[2].checked) ir='Music';
+        let selInt = [];
+    for(let i = 0; i < interest.length; i++) 
+    {
+        if (interest[i].checked) 
+        {
+            selInt.push(interest[i].value);
+        }
+    }
+    
+    let inter= selInt.length>0?selInt.join(",") : " ";
         let str = `
           <h3>Verify your information</h3>
           <p>Name:${firstname} ${surname}</p>
           <p>Email:${email}</p>
           <p>Password:${password}</p>
           <p>Gender:${g}</p>
-          <p>Interest:${ir}</p>
+          <p>Interest:${inter}</p>
           <p>Date of Birth:${dob}</p>
           <button>Confirm</button>
           <button onclick=showForm()>Edit</button>
@@ -181,6 +186,8 @@
       };
 
       const showForm = () => {
+        let inter = "";
+        
         let str = `
       
       <div class="row">
@@ -242,33 +249,27 @@
           >
         </div>
       </div>
-     <div class="row">
-        <div class="radioClass">
-          <div><label> Sports</label></div>
-          <div><input type="checkbox" ${
-            ir === "Sports" && "checked"
-          } name="interest" onclick="togglePronoun()" /></div>
-        </div>
-        <div class="radioClass">
-          <div><label> Movies</label></div>
-          <div><input type="checkbox" ${
-            ir === "Movies" && "checked"
-          } name="interest" onclick="togglePronoun()" /></div>
-        </div>
-        <div class="radioClass">
-          <div><label> Music</label></div>
-          <div><input type="checkbox" ${
-             ir === "Music" && "checked"
-          } name="interest" onclick="togglePronoun()" /></div>
-        </div>
-      </div>
+      <div class="row">
+   <div class="radioClass">
+  <div><label> Sports</label></div>
+  <div><input type="checkbox" value="Sports" name="interest" ${inter.includes("Sports") ? "checked" : ""}/></div>
+</div>
+<div class="radioClass">
+  <div><label> Movies</label></div>
+  <div><input type="checkbox" value="Movies" name="interest" ${inter.includes("Movies") ? "checked" : ""}/></div>
+</div>
+<div class="radioClass">
+  <div><label> Music</label></div>
+  <div><input type="checkbox" value="Music" name="interest" ${inter.includes("Music") ? "checked" : ""}/></div>
+</div>
+</div>
 
       <div class="row">
         <input type="text" value='${email}' id="email" placeholder="Mobule number or email address" />
       </div>
       <div class="row">
         <input type="password" value='${password}' id="password" placeholder="New password" />
-        <img src="eye-hide.png" id='toggleEye' onclick='togglePwd()' width="40px">
+        <img src="images/password-not-visible-3.png" id='toggleEye' onclick='togglePwd()' width="40px">
       </div>
       <div class="row">
         <button onclick='showData()'>Sign Up</button>
@@ -284,11 +285,11 @@
         let pwd = document.getElementById("password");
         if (pwd.type === "password") {
           document.getElementById("toggleEye").src =
-            "eye-show.png";
+          "images/password-not-visible-3.png";
           pwd.type = "text";
         } else {
           document.getElementById("toggleEye").src =
-            "eye-hide.png";
+          "images/password-not-visible-3.png";
           pwd.type = "password";
         }
       };

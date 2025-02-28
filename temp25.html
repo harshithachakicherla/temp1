@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <div id="root"></div> -->
+     <img src="images/password-not-visible-3.png" width="200px" id="pw">
+    <script>
+        pw.style.position="absolute";
+    let b=document.body;
+    let d=0;
+    let l=0;
+    b.onkeydown=(e)=>{
+     if(e.key=="ArrowRight")
+     l=l+5;
+    if(e.key=="ArrowDown")
+    d=d+5;
+if(e.key=="ArrowLeft")
+l=l-5;
+if(e.key=="ArrowUp")
+d=d-5;
+    pw.style.left=l+"px";
+    pw.style.top=d+"px";
+    // pw.style.right=l+"px";
+    // pw.style.down=d+"px";
+    }
+    </script>
+</body>
+</html>
